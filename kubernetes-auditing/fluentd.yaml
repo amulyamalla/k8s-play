@@ -66,7 +66,7 @@ data:
       log_level debug
       include_tag_key false
       logstash_prefix auditing 
-      host 10.109.205.231    # Subsitute with the actual endpoint address for elasticsearch. get it from "kubectl get svc elasticsearch" 
+      host 10.109.205.231    # Substitute with the actual endpoint address for elasticsearch. get it from "kubectl get svc elasticsearch" 
       port 9200    # Subsitute with the port number Typically 9200 
       logstash_format true
       buffer_chunk_limit 512k
