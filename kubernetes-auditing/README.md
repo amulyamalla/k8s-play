@@ -12,7 +12,7 @@ Let us look at the way auditing is enabled and dive deeper at the actors in play
 
 Working on kubernetes objects eventually means using the kubernetes REST API, which is either via kubectl or via the kubernetes client libraries. Hence, all the auditing is performed by the kubeapiserver by enabling options for auditing. 
 
-> Note: Since the kube-apiserver is the one which generates events, the memory consumption of the apiserver pod increases. This is directly proportional to the number of events generated. 
+> *Note*: Since the kube-apiserver is the one which generates events, the memory consumption of the apiserver pod increases. This is directly proportional to the number of events generated. 
 
 An audit event is logged when each request is received. A request as it traverses through several stages generates events. A Policy resource defines if these events need to be ignored or to be logged. 
 
@@ -107,7 +107,7 @@ spec:
 
 The new user certificate request needs to be approved, which essentially signs the user generated certificate by the cluster CA. 
 
-> This step is performed by a cluster administrator
+> These steps are performed by a cluster administrator
 
 ```
 kubectl certificate approve user-jai
@@ -175,14 +175,15 @@ The kibana service is exposed over NodePort.
 
 Edit the `fluentd` Configmap in the `fluentd.yaml` file. Provide the clusterIP of the elasticsearch client service. 
 
-> Note: Fluentd is used as a deployment in this case. It also has a Pod affinity where it gets scheduled to a node which runs the pod with label "component=kube-apiserver"
+> *Note*: Fluentd is used as a deployment in this case. It also has a Pod affinity where it gets scheduled to a node which runs the pod with label "component=kube-apiserver"
 
 ```
 kubectl apply -f fluentd.yaml
 ```
 
 This will publish the audit log at `/var/log/audit.log` to the elasticsearch cluster, and these logs can be viewed by Kibana
-[Auditing logs](/images/audittrail.png)
+
+![Auditing logs](./images/audittrail.png)
 
 #### Test the setup. 
 
@@ -195,4 +196,4 @@ kubectl --kubeconfig ~/.kube/config-jai edit secret jai-secret
 
 The Audit trail for the above commands should look something like this
 
-[Audit trail](/image/users_audit_trail.png)
+![Audit trail](./images/users_audit_trail.png)
